@@ -1,0 +1,76 @@
+---
+title: "Soap"
+output: html_notebook
+---
+
+## packages
+
+```{r}
+library(tidyverse)
+```
+
+## the soap data
+
+We read in the data
+
+```{r}
+my_url <- url("http://ritsokiguess.site/datafiles/soap.txt")
+soap <- read_delim(my_url, " ")
+soap
+```
+
+
+There are 27 observations on 4 variables.
+
+## Some graphs
+
+A histogram of the `scrap` values
+
+```{r}
+ggplot(soap, aes(x = scrap)) + geom_histogram(bins = 10)
+```
+
+Boxplot of scrap by line
+
+```{r}
+ggplot(soap, 
+       aes(x = line, 
+           y = scrap)) + 
+  geom_boxplot()
+```
+
+or summarize  by numbers (from lecture 2b)
+
+```{r}
+soap %>% 
+  group_by(line) %>% 
+  summarize(med_scrap = median(scrap), 
+            med_speed = median(speed))
+```
+
+
+Scrap and speed: scatterplot
+
+```{r}
+ggplot(soap, aes(x = speed, y = scrap)) + geom_point()
+```
+
+If the production line is run faster, there tends to be more scrap.
+
+Can we indicate which production line each observation came from? Use colour:
+
+```{r}
+ggplot(soap, aes(x = speed, y = scrap, colour = line)) + geom_point()
+```
+
+the red points are usually above the blue ones, so line A produces more scrap on average than line B at the same speed.
+
+```{r}
+ggplot(soap, aes(x = speed, y = scrap, colour = line)) + geom_point() + geom_smooth(method = "lm")
+```
+
+
+
+
+
+
