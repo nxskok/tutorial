@@ -11,7 +11,7 @@
 
 
 
-<title>Soap</title>
+<title>R Notebook</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1744,97 +1744,27 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Soap</h1>
+<h1 class="title toc-ignore">R Notebook</h1>
 
 </div>
 
 
 <!-- rnb-text-begin -->
-<div id="packages" class="section level2">
-<h2>packages</h2>
+<p>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> Notebook. When you execute code within the notebook, the results appear beneath the code.</p>
+<p>Try executing this chunk by clicking the <em>Run</em> button within the chunk or by placing your cursor inside it and pressing <em>Ctrl+Shift+Enter</em>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
-<pre class="r"><code>library(tidyverse)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
+<pre class="r"><code>plot(cars)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-</div>
-<div id="the-soap-data" class="section level2">
-<h2>the soap data</h2>
-<p>We read in the data</p>
+<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
+<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
+<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
 <!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXlfdXJsIDwtIHVybChcImh0dHA6Ly9yaXRzb2tpZ3Vlc3Muc2l0ZS9kYXRhZmlsZXMvc29hcC50eHRcIilcbnNvYXAgPC0gcmVhZF9kZWxpbShteV91cmwsIFwiIFwiKVxuc29hcFxuYGBgIn0= -->
-<pre class="r"><code>my_url &lt;- url(&quot;http://ritsokiguess.site/datafiles/soap.txt&quot;)
-soap &lt;- read_delim(my_url, &quot; &quot;)
-soap</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>There are 27 observations on 4 variables.</p>
-</div>
-<div id="some-graphs" class="section level2">
-<h2>Some graphs</h2>
-<p>A histogram of the <code>scrap</code> values</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHNvYXAsIGFlcyh4ID0gc2NyYXApKSArIGdlb21faGlzdG9ncmFtKGJpbnMgPSAxMClcbmBgYCJ9 -->
-<pre class="r"><code>ggplot(soap, aes(x = scrap)) + geom_histogram(bins = 10)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Boxplot of scrap by line</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHNvYXAsIFxuICAgICAgIGFlcyh4ID0gbGluZSwgXG4gICAgICAgICAgIHkgPSBzY3JhcCkpICsgXG4gIGdlb21fYm94cGxvdCgpXG5gYGAifQ== -->
-<pre class="r"><code>ggplot(soap, 
-       aes(x = line, 
-           y = scrap)) + 
-  geom_boxplot()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>or summarize by numbers (from lecture 2b)</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc29hcCAlPiUgXG4gIGdyb3VwX2J5KGxpbmUpICU+JSBcbiAgc3VtbWFyaXplKG1lZF9zY3JhcCA9IG1lZGlhbihzY3JhcCksIFxuICAgICAgICAgICAgbWVkX3NwZWVkID0gbWVkaWFuKHNwZWVkKSlcbmBgYCJ9 -->
-<pre class="r"><code>soap %&gt;% 
-  group_by(line) %&gt;% 
-  summarize(med_scrap = median(scrap), 
-            med_speed = median(speed))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Scrap and speed: scatterplot</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHNvYXAsIGFlcyh4ID0gc3BlZWQsIHkgPSBzY3JhcCkpICsgZ2VvbV9wb2ludCgpXG5gYGAifQ== -->
-<pre class="r"><code>ggplot(soap, aes(x = speed, y = scrap)) + geom_point()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>If the production line is run faster, there tends to be more scrap.</p>
-<p>Can we indicate which production line each observation came from? Use colour:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHNvYXAsIGFlcyh4ID0gc3BlZWQsIHkgPSBzY3JhcCwgY29sb3VyID0gbGluZSkpICsgZ2VvbV9wb2ludCgpXG5gYGAifQ== -->
-<pre class="r"><code>ggplot(soap, aes(x = speed, y = scrap, colour = line)) + geom_point()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>the red points are usually above the blue ones, so line A produces more scrap on average than line B at the same speed.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHNvYXAsIGFlcyh4ID0gc3BlZWQsIHkgPSBzY3JhcCwgY29sb3VyID0gbGluZSkpICsgZ2VvbV9wb2ludCgpICsgZ2VvbV9zbW9vdGgobWV0aG9kID0gXCJsbVwiKVxuYGBgIn0= -->
-<pre class="r"><code>ggplot(soap, aes(x = speed, y = scrap, colour = line)) + geom_point() + geom_smooth(method = &quot;lm&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiU29hcCIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyMgcGFja2FnZXMKCmBgYHtyfQpsaWJyYXJ5KHRpZHl2ZXJzZSkKYGBgCgojIyB0aGUgc29hcCBkYXRhCgpXZSByZWFkIGluIHRoZSBkYXRhCgpgYGB7cn0KbXlfdXJsIDwtIHVybCgiaHR0cDovL3JpdHNva2lndWVzcy5zaXRlL2RhdGFmaWxlcy9zb2FwLnR4dCIpCnNvYXAgPC0gcmVhZF9kZWxpbShteV91cmwsICIgIikKc29hcApgYGAKCgpUaGVyZSBhcmUgMjcgb2JzZXJ2YXRpb25zIG9uIDQgdmFyaWFibGVzLgoKIyMgU29tZSBncmFwaHMKCkEgaGlzdG9ncmFtIG9mIHRoZSBgc2NyYXBgIHZhbHVlcwoKYGBge3J9CmdncGxvdChzb2FwLCBhZXMoeCA9IHNjcmFwKSkgKyBnZW9tX2hpc3RvZ3JhbShiaW5zID0gMTApCmBgYAoKQm94cGxvdCBvZiBzY3JhcCBieSBsaW5lCgpgYGB7cn0KZ2dwbG90KHNvYXAsIAogICAgICAgYWVzKHggPSBsaW5lLCAKICAgICAgICAgICB5ID0gc2NyYXApKSArIAogIGdlb21fYm94cGxvdCgpCmBgYAoKb3Igc3VtbWFyaXplICBieSBudW1iZXJzIChmcm9tIGxlY3R1cmUgMmIpCgpgYGB7cn0Kc29hcCAlPiUgCiAgZ3JvdXBfYnkobGluZSkgJT4lIAogIHN1bW1hcml6ZShtZWRfc2NyYXAgPSBtZWRpYW4oc2NyYXApLCAKICAgICAgICAgICAgbWVkX3NwZWVkID0gbWVkaWFuKHNwZWVkKSkKYGBgCgoKU2NyYXAgYW5kIHNwZWVkOiBzY2F0dGVycGxvdAoKYGBge3J9CmdncGxvdChzb2FwLCBhZXMoeCA9IHNwZWVkLCB5ID0gc2NyYXApKSArIGdlb21fcG9pbnQoKQpgYGAKCklmIHRoZSBwcm9kdWN0aW9uIGxpbmUgaXMgcnVuIGZhc3RlciwgdGhlcmUgdGVuZHMgdG8gYmUgbW9yZSBzY3JhcC4KCkNhbiB3ZSBpbmRpY2F0ZSB3aGljaCBwcm9kdWN0aW9uIGxpbmUgZWFjaCBvYnNlcnZhdGlvbiBjYW1lIGZyb20/IFVzZSBjb2xvdXI6CgpgYGB7cn0KZ2dwbG90KHNvYXAsIGFlcyh4ID0gc3BlZWQsIHkgPSBzY3JhcCwgY29sb3VyID0gbGluZSkpICsgZ2VvbV9wb2ludCgpCmBgYAoKdGhlIHJlZCBwb2ludHMgYXJlIHVzdWFsbHkgYWJvdmUgdGhlIGJsdWUgb25lcywgc28gbGluZSBBIHByb2R1Y2VzIG1vcmUgc2NyYXAgb24gYXZlcmFnZSB0aGFuIGxpbmUgQiBhdCB0aGUgc2FtZSBzcGVlZC4KCmBgYHtyfQpnZ3Bsb3Qoc29hcCwgYWVzKHggPSBzcGVlZCwgeSA9IHNjcmFwLCBjb2xvdXIgPSBsaW5lKSkgKyBnZW9tX3BvaW50KCkgKyBnZW9tX3Ntb290aChtZXRob2QgPSAibG0iKQpgYGAKCgoKCgoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4gCgpUcnkgZXhlY3V0aW5nIHRoaXMgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpSdW4qIGJ1dHRvbiB3aXRoaW4gdGhlIGNodW5rIG9yIGJ5IHBsYWNpbmcgeW91ciBjdXJzb3IgaW5zaWRlIGl0IGFuZCBwcmVzc2luZyAqQ3RybCtTaGlmdCtFbnRlciouIAoKYGBge3J9CnBsb3QoY2FycykKYGBgCgpBZGQgYSBuZXcgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ3RybCtBbHQrSSouCgpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkN0cmwrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4KClRoZSBwcmV2aWV3IHNob3dzIHlvdSBhIHJlbmRlcmVkIEhUTUwgY29weSBvZiB0aGUgY29udGVudHMgb2YgdGhlIGVkaXRvci4gQ29uc2VxdWVudGx5LCB1bmxpa2UgKktuaXQqLCAqUHJldmlldyogZG9lcyBub3QgcnVuIGFueSBSIGNvZGUgY2h1bmtzLiBJbnN0ZWFkLCB0aGUgb3V0cHV0IG9mIHRoZSBjaHVuayB3aGVuIGl0IHdhcyBsYXN0IHJ1biBpbiB0aGUgZWRpdG9yIGlzIGRpc3BsYXllZC4K</div>
 
 
 
@@ -1881,7 +1811,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("soap.Rmd");
+  window.initializeSourceEmbed("cars.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

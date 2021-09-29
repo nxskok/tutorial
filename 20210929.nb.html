@@ -11,7 +11,7 @@
 
 
 
-<title>Soap</title>
+<title>R Notebook</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1744,97 +1744,95 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Soap</h1>
+<h1 class="title toc-ignore">R Notebook</h1>
 
 </div>
 
 
 <!-- rnb-text-begin -->
-<div id="packages" class="section level2">
-<h2>packages</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
-<pre class="r"><code>library(tidyverse)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5cbmBgYCJ9 -->
+<pre class="r"><code>library(tidyverse)
+</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdkYnBseXInOlxuICBtZXRob2QgICAgICAgICBmcm9tXG4gIHByaW50LnRibF9sYXp5ICAgICBcbiAgcHJpbnQudGJsX3NxbCAgICAgIFxuXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1BdHRhY2hpbmcgcGFja2FnZXNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2UgMS4zLjAg4pSA4pSAXHUwMDFiWzM5bVxuXHUwMDFiWzM3bVx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1nZ3Bsb3QyXHUwMDFiWzM3bSAzLjMuMyAgICAgXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXB1cnJyICBcdTAwMWJbMzdtIDAuMy40XG5cdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtdGliYmxlIFx1MDAxYlszN20gMy4xLjIgICAgIFx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1kcGx5ciAgXHUwMDFiWzM3bSAxLjAuNlxuXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXRpZHlyICBcdTAwMWJbMzdtIDEuMS4yICAgICBcdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtc3RyaW5nclx1MDAxYlszN20gMS40LjBcblx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1yZWFkciAgXHUwMDFiWzM3bSAyLjAuMSAgICAgXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bWZvcmNhdHNcdTAwMWJbMzdtIDAuNS4xXHUwMDFiWzM5bVxuXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1Db25mbGljdHNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2VfY29uZmxpY3RzKCkg4pSA4pSAXG5cdTAwMWJbMzFteFx1MDAxYlszN20gXHUwMDFiWzM0bWRwbHlyXHUwMDFiWzM3bTo6XHUwMDFiWzMybWZpbHRlcigpXHUwMDFiWzM3bSBtYXNrcyBcdTAwMWJbMzRtc3RhdHNcdTAwMWJbMzdtOjpmaWx0ZXIoKVxuXHUwMDFiWzMxbXhcdTAwMWJbMzdtIFx1MDAxYlszNG1kcGx5clx1MDAxYlszN206Olx1MDAxYlszMm1sYWcoKVx1MDAxYlszN20gICAgbWFza3MgXHUwMDFiWzM0bXN0YXRzXHUwMDFiWzM3bTo6bGFnKClcdTAwMWJbMzltXG4ifQ== -->
+<pre><code>Registered S3 methods overwritten by &#39;dbplyr&#39;:
+  method         from
+  print.tbl_lazy     
+  print.tbl_sql      
+[37m── [1mAttaching packages[22m ───────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──[39m
+[37m[32m✓[37m [34mggplot2[37m 3.3.3     [32m✓[37m [34mpurrr  [37m 0.3.4
+[32m✓[37m [34mtibble [37m 3.1.2     [32m✓[37m [34mdplyr  [37m 1.0.6
+[32m✓[37m [34mtidyr  [37m 1.1.2     [32m✓[37m [34mstringr[37m 1.4.0
+[32m✓[37m [34mreadr  [37m 2.0.1     [32m✓[37m [34mforcats[37m 0.5.1[39m
+[37m── [1mConflicts[22m ──────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+[31mx[37m [34mdplyr[37m::[32mfilter()[37m masks [34mstats[37m::filter()
+[31mx[37m [34mdplyr[37m::[32mlag()[37m    masks [34mstats[37m::lag()[39m</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-</div>
-<div id="the-soap-data" class="section level2">
-<h2>the soap data</h2>
-<p>We read in the data</p>
+<p>6.6 one-sample cholesterol</p>
+<p>The data set here (<a href="http://ritsokiguess.site/datafiles/cholest.csv" class="uri">http://ritsokiguess.site/datafiles/cholest.csv</a>) contains cholesterol measurements for heart attack patients (at several different times) as well as for a group of control patients. We will focus on the control patients in this question.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Read in and display (some of) the data.</li>
+</ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXlfdXJsIDwtIHVybChcImh0dHA6Ly9yaXRzb2tpZ3Vlc3Muc2l0ZS9kYXRhZmlsZXMvc29hcC50eHRcIilcbnNvYXAgPC0gcmVhZF9kZWxpbShteV91cmwsIFwiIFwiKVxuc29hcFxuYGBgIn0= -->
-<pre class="r"><code>my_url &lt;- url(&quot;http://ritsokiguess.site/datafiles/soap.txt&quot;)
-soap &lt;- read_delim(my_url, &quot; &quot;)
-soap</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXlfdXJsIDwtIHVybChcImh0dHA6Ly9yaXRzb2tpZ3Vlc3Muc2l0ZS9kYXRhZmlsZXMvY2hvbGVzdC5jc3ZcIilcbmNob2xlc3QgPC0gcmVhZF9jc3YobXlfdXJsKVxuYGBgIn0= -->
+<pre class="r"><code>my_url &lt;- url(&quot;http://ritsokiguess.site/datafiles/cholest.csv&quot;)
+cholest &lt;- read_csv(my_url)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>There are 27 observations on 4 variables.</p>
-</div>
-<div id="some-graphs" class="section level2">
-<h2>Some graphs</h2>
-<p>A histogram of the <code>scrap</code> values</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHNvYXAsIGFlcyh4ID0gc2NyYXApKSArIGdlb21faGlzdG9ncmFtKGJpbnMgPSAxMClcbmBgYCJ9 -->
-<pre class="r"><code>ggplot(soap, aes(x = scrap)) + geom_histogram(bins = 10)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Boxplot of scrap by line</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHNvYXAsIFxuICAgICAgIGFlcyh4ID0gbGluZSwgXG4gICAgICAgICAgIHkgPSBzY3JhcCkpICsgXG4gIGdlb21fYm94cGxvdCgpXG5gYGAifQ== -->
-<pre class="r"><code>ggplot(soap, 
-       aes(x = line, 
-           y = scrap)) + 
-  geom_boxplot()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>or summarize by numbers (from lecture 2b)</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc29hcCAlPiUgXG4gIGdyb3VwX2J5KGxpbmUpICU+JSBcbiAgc3VtbWFyaXplKG1lZF9zY3JhcCA9IG1lZGlhbihzY3JhcCksIFxuICAgICAgICAgICAgbWVkX3NwZWVkID0gbWVkaWFuKHNwZWVkKSlcbmBgYCJ9 -->
-<pre class="r"><code>soap %&gt;% 
-  group_by(line) %&gt;% 
-  summarize(med_scrap = median(scrap), 
-            med_speed = median(speed))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Scrap and speed: scatterplot</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHNvYXAsIGFlcyh4ID0gc3BlZWQsIHkgPSBzY3JhcCkpICsgZ2VvbV9wb2ludCgpXG5gYGAifQ== -->
-<pre class="r"><code>ggplot(soap, aes(x = speed, y = scrap)) + geom_point()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>If the production line is run faster, there tends to be more scrap.</p>
-<p>Can we indicate which production line each observation came from? Use colour:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHNvYXAsIGFlcyh4ID0gc3BlZWQsIHkgPSBzY3JhcCwgY29sb3VyID0gbGluZSkpICsgZ2VvbV9wb2ludCgpXG5gYGAifQ== -->
-<pre class="r"><code>ggplot(soap, aes(x = speed, y = scrap, colour = line)) + geom_point()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>the red points are usually above the blue ones, so line A produces more scrap on average than line B at the same speed.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHNvYXAsIGFlcyh4ID0gc3BlZWQsIHkgPSBzY3JhcCwgY29sb3VyID0gbGluZSkpICsgZ2VvbV9wb2ludCgpICsgZ2VvbV9zbW9vdGgobWV0aG9kID0gXCJsbVwiKVxuYGBgIn0= -->
-<pre class="r"><code>ggplot(soap, aes(x = speed, y = scrap, colour = line)) + geom_point() + geom_smooth(method = &quot;lm&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-</div>
+<!-- rnb-output-begin eyJkYXRhIjoiXHUwMDFiWzFtXHUwMDFiWzFtUm93czogXHUwMDFiWzFtXHUwMDFiWzIybVx1MDAxYlszNG1cdTAwMWJbMzRtMzBcdTAwMWJbMzRtXHUwMDFiWzM5bSBcdTAwMWJbMW1cdTAwMWJbMW1Db2x1bW5zOiBcdTAwMWJbMW1cdTAwMWJbMjJtXHUwMDFiWzM0bVx1MDAxYlszNG00XHUwMDFiWzM0bVx1MDAxYlszOW1cblx1MDAxYlszNm3ilIDilIBcdTAwMWJbMzltIFx1MDAxYlsxbVx1MDAxYlsxbUNvbHVtbiBzcGVjaWZpY2F0aW9uXHUwMDFiWzFtXHUwMDFiWzIybSBcdTAwMWJbMzZt4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAXHUwMDFiWzM5bVxuXHUwMDFiWzFtRGVsaW1pdGVyOlx1MDAxYlsyMm0gXCIsXCJcblx1MDAxYlszMm1kYmxcdTAwMWJbMzltICg0KTogMi1EYXksIDQtRGF5LCAxNC1EYXksIGNvbnRyb2xcblxuXHUwMDFiWzM2beKEuVx1MDAxYlszOW0gVXNlIFx1MDAxYlszODs1OzI1MW1cdTAwMWJbNDg7NTsyMzVtXHUwMDFiWzM4OzU7MjUxbVx1MDAxYls0ODs1OzIzNW1gc3BlYygpYFx1MDAxYls0ODs1OzIzNW1cdTAwMWJbMzg7NTsyNTFtXHUwMDFiWzQ5bVx1MDAxYlszOW0gdG8gcmV0cmlldmUgdGhlIGZ1bGwgY29sdW1uIHNwZWNpZmljYXRpb24gZm9yIHRoaXMgZGF0YS5cblx1MDAxYlszNm3ihLlcdTAwMWJbMzltIFNwZWNpZnkgdGhlIGNvbHVtbiB0eXBlcyBvciBzZXQgXHUwMDFiWzM4OzU7MjUxbVx1MDAxYls0ODs1OzIzNW1cdTAwMWJbMzg7NTsyNTFtXHUwMDFiWzQ4OzU7MjM1bWBzaG93X2NvbF90eXBlcyA9IEZBTFNFYFx1MDAxYls0ODs1OzIzNW1cdTAwMWJbMzg7NTsyNTFtXHUwMDFiWzQ5bVx1MDAxYlszOW0gdG8gcXVpZXQgdGhpcyBtZXNzYWdlLlxuIn0= -->
+<pre><code>[1m[1mRows: [1m[22m[34m[34m30[34m[39m [1m[1mColumns: [1m[22m[34m[34m4[34m[39m
+[36m──[39m [1m[1mColumn specification[1m[22m [36m──────────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m &quot;,&quot;
+[32mdbl[39m (4): 2-Day, 4-Day, 14-Day, control
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiU29hcCIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyMgcGFja2FnZXMKCmBgYHtyfQpsaWJyYXJ5KHRpZHl2ZXJzZSkKYGBgCgojIyB0aGUgc29hcCBkYXRhCgpXZSByZWFkIGluIHRoZSBkYXRhCgpgYGB7cn0KbXlfdXJsIDwtIHVybCgiaHR0cDovL3JpdHNva2lndWVzcy5zaXRlL2RhdGFmaWxlcy9zb2FwLnR4dCIpCnNvYXAgPC0gcmVhZF9kZWxpbShteV91cmwsICIgIikKc29hcApgYGAKCgpUaGVyZSBhcmUgMjcgb2JzZXJ2YXRpb25zIG9uIDQgdmFyaWFibGVzLgoKIyMgU29tZSBncmFwaHMKCkEgaGlzdG9ncmFtIG9mIHRoZSBgc2NyYXBgIHZhbHVlcwoKYGBge3J9CmdncGxvdChzb2FwLCBhZXMoeCA9IHNjcmFwKSkgKyBnZW9tX2hpc3RvZ3JhbShiaW5zID0gMTApCmBgYAoKQm94cGxvdCBvZiBzY3JhcCBieSBsaW5lCgpgYGB7cn0KZ2dwbG90KHNvYXAsIAogICAgICAgYWVzKHggPSBsaW5lLCAKICAgICAgICAgICB5ID0gc2NyYXApKSArIAogIGdlb21fYm94cGxvdCgpCmBgYAoKb3Igc3VtbWFyaXplICBieSBudW1iZXJzIChmcm9tIGxlY3R1cmUgMmIpCgpgYGB7cn0Kc29hcCAlPiUgCiAgZ3JvdXBfYnkobGluZSkgJT4lIAogIHN1bW1hcml6ZShtZWRfc2NyYXAgPSBtZWRpYW4oc2NyYXApLCAKICAgICAgICAgICAgbWVkX3NwZWVkID0gbWVkaWFuKHNwZWVkKSkKYGBgCgoKU2NyYXAgYW5kIHNwZWVkOiBzY2F0dGVycGxvdAoKYGBge3J9CmdncGxvdChzb2FwLCBhZXMoeCA9IHNwZWVkLCB5ID0gc2NyYXApKSArIGdlb21fcG9pbnQoKQpgYGAKCklmIHRoZSBwcm9kdWN0aW9uIGxpbmUgaXMgcnVuIGZhc3RlciwgdGhlcmUgdGVuZHMgdG8gYmUgbW9yZSBzY3JhcC4KCkNhbiB3ZSBpbmRpY2F0ZSB3aGljaCBwcm9kdWN0aW9uIGxpbmUgZWFjaCBvYnNlcnZhdGlvbiBjYW1lIGZyb20/IFVzZSBjb2xvdXI6CgpgYGB7cn0KZ2dwbG90KHNvYXAsIGFlcyh4ID0gc3BlZWQsIHkgPSBzY3JhcCwgY29sb3VyID0gbGluZSkpICsgZ2VvbV9wb2ludCgpCmBgYAoKdGhlIHJlZCBwb2ludHMgYXJlIHVzdWFsbHkgYWJvdmUgdGhlIGJsdWUgb25lcywgc28gbGluZSBBIHByb2R1Y2VzIG1vcmUgc2NyYXAgb24gYXZlcmFnZSB0aGFuIGxpbmUgQiBhdCB0aGUgc2FtZSBzcGVlZC4KCmBgYHtyfQpnZ3Bsb3Qoc29hcCwgYWVzKHggPSBzcGVlZCwgeSA9IHNjcmFwLCBjb2xvdXIgPSBsaW5lKSkgKyBnZW9tX3BvaW50KCkgKyBnZW9tX3Ntb290aChtZXRob2QgPSAibG0iKQpgYGAKCgoKCgoK</div>
+[36mℹ[39m Use [38;5;251m[48;5;235m[38;5;251m[48;5;235m`spec()`[48;5;235m[38;5;251m[49m[39m to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set [38;5;251m[48;5;235m[38;5;251m[48;5;235m`show_col_types = FALSE`[48;5;235m[38;5;251m[49m[39m to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2hvbGVzdFxuYGBgIn0= -->
+<pre class="r"><code>cholest</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInNwZWNfdGJsX2RmIiwidGJsX2RmIiwidGJsIiwiZGF0YS5mcmFtZSJdLCJuY29sIjo0LCJucm93IjozMH0sInJkZiI6Ikg0c0lBQUFBQUFBQUEzVlVUVTZEUUJnZHNkall4Si9FZmVNRjJrVHJ3aVVMNHdHTUptNU1Tb0ZTV2hnbzROL0tIc1Y0a2g3RmVBSlAwRHFVOTdBelJoTDY1bjIvNzVzWmVuTjFQK2pjZDRRUXU2SWxMTEZycTZXdzcyNnZlNWRDdEN4RmRwUmp2OElYRlhTaUZpMzFIcXEzNjJTZlZiUndra1dOVTZkR2QxbmpIUGE1cU5FSHptQ1BFUytCSVRCN3J6RkNuUUo5OGlIcXdaOGdQa2JkdWFQN245Q25ZQjcxZ09kQ1I3blE1bm43cm43Ykg4Um03cG1qOTU5QzV3UHFSSWFlRVhDTXVHU3A5dzFwWCtnNnNsTnc2b1J1N2gvN2tIUC9ucWdEbkhwVDZocnFuT2VJYy9oM2JtK2grZitMZHpMVTVUMllDYTFmRXhjSWJlN0d6cmt5dzI3eUVITnpYN2svT0k4bWJtSnc2dU45aVBTNmYrYWVJQzVCSHZYeDN2S2Vqc0ZEK05HM3VmZlVTWndZUERIc25NOWZhanAvNjZEZmxISEFtUG53KzQ2ZXgvc1FVRC8xQ1R6YWgyOUxOd2tLdFRpdVBEU2U5NjdjVjVLTExiSjN0czNhWGlyTFBJMk5tdnQ1K3R4bjNRUDFXcFgwOVhyOVpUYjNZcmRnY3hvN3ZsdTYvWEd1OGhWYkdTbnROQ3VqVktva3EvcTdzbzNrbmR3d0hEM0tTb25mOHlhUGN0WWJWQTAyN3ZvNXdMcTd0VzdWTGEwMVN0bWNQWkJoSkFOcWo5MVJFSU1jcW9rM0EvZXpQSklsSjFIV29sK21wY3U0anBmR3RHeG1FNnNmbGVqT2ZLVUZBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["2-Day"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["4-Day"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["14-Day"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["control"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"270","2":"218","3":"156","4":"196"},{"1":"236","2":"234","3":"NA","4":"232"},{"1":"210","2":"214","3":"242","4":"200"},{"1":"142","2":"116","3":"NA","4":"242"},{"1":"280","2":"200","3":"NA","4":"206"},{"1":"272","2":"276","3":"256","4":"178"},{"1":"160","2":"146","3":"142","4":"184"},{"1":"220","2":"182","3":"216","4":"198"},{"1":"226","2":"238","3":"248","4":"160"},{"1":"242","2":"288","3":"NA","4":"182"},{"1":"186","2":"190","3":"168","4":"182"},{"1":"266","2":"236","3":"236","4":"198"},{"1":"206","2":"244","3":"NA","4":"182"},{"1":"318","2":"258","3":"200","4":"238"},{"1":"294","2":"240","3":"264","4":"198"},{"1":"282","2":"294","3":"NA","4":"188"},{"1":"234","2":"220","3":"264","4":"166"},{"1":"224","2":"200","3":"NA","4":"204"},{"1":"276","2":"220","3":"188","4":"182"},{"1":"282","2":"186","3":"182","4":"178"},{"1":"360","2":"352","3":"294","4":"212"},{"1":"310","2":"202","3":"214","4":"164"},{"1":"280","2":"218","3":"NA","4":"230"},{"1":"278","2":"248","3":"198","4":"186"},{"1":"288","2":"278","3":"NA","4":"162"},{"1":"288","2":"248","3":"256","4":"182"},{"1":"244","2":"270","3":"280","4":"218"},{"1":"236","2":"242","3":"204","4":"170"},{"1":"NA","2":"NA","3":"NA","4":"200"},{"1":"NA","2":"NA","3":"NA","4":"176"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[30]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="2" style="list-style-type: lower-alpha">
+<li><p>Make a suitable plot of the cholesterol levels of the control patients, and comment briefly on the shape of the distribution.</p></li>
+<li><p>It is recommended that people in good health, such as the Control patients here, keep their cholesterol level below 200. Is there evidence that the mean cholesterol level of the population of people of which the Control patients are a sample is less than 200? Show that you understand the process, and state your conclusion in the context of the data.</p></li>
+<li><p>What values could the population mean cholesterol level take? You might need to get some more output to determine this.</p></li>
+<li><p>Explain briefly why you would be reasonably happy to trust the t procedures in this question. (There are two points you need to make.)</p></li>
+</ol>
+<p>7.4 Exercise and anxiety and bullying mice</p>
+<p>Does exercise help to reduce anxiety? To assess this, some researchers randomly assigned mice to either an enriched environment where there was an exercise wheel available, or a standard environment with no exercise options. After three weeks in the specified environment, for five minutes a day for two weeks, the mice were each exposed to a “mouse bully” — a mouse who was very strong, aggressive, and territorial. One measure of mouse anxiety is amount of time hiding in a dark compartment, with mice who are more anxious spending more time in darkness. The amount of time spent in darkness is recorded for each of the mice.</p>
+<p>The data can be found at link (<a href="http://ritsokiguess.site/datafiles/stressedmice.txt" class="uri">http://ritsokiguess.site/datafiles/stressedmice.txt</a>).</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Read the data into R, and display your data frame. Count the number of mice in each group.</p></li>
+<li><p>Draw side-by-side boxplots of time spent in darkness for each group of mice.</p></li>
+<li><p>Do the boxplots support the hypothesis about exercise and anxiety? Explain briefly.</p></li>
+<li><p>Carry out a t-test for comparing the mean time spent in darkness for the mice in the two groups. Think carefully about the details of the t-test (and what you need evidence in favour of).</p></li>
+<li><p>What do you conclude, in terms of anxiety and exercise (at least for mice)? Explain briefly.</p></li>
+<li><p>Does anything in the previous parts suggest any problems with the analysis you just did? Explain briefly.</p></li>
+</ol>
+<p>7.7 The anchoring effect: Australia vs US</p>
+<p>Two groups of students (in a class at a American university) were asked what they thought the population of Canada was. (The correct answer at the time was just over 30 million.) Some of the students, before having to answer this, were told that the population of the United States was about 270 million. The other students in the class were told that the population of Australia was about 18 million. The data are in <a href="http://ritsokiguess.site/datafiles/anchoring.csv" class="uri">http://ritsokiguess.site/datafiles/anchoring.csv</a>. The first column contains the country whose population the student was told, and the second contains the student’s guess at the population of Canada.</p>
+<p>You might wonder how being told the population of an unrelated country would have any impact on a student’s guess at the population of Canada. Psychology says it does: it’s called the anchoring effect, and the idea is that the number mentioned first acts as an “anchor”: a person’s guess will be closer to the anchor than it would have been otherwise. In this case, that would mean that the guesses for the students given the US as an anchor will be higher than for the students given Australia as an anchor. We are interested in seeing whether there is evidence for that here.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Read in and display (some of) the data.</p></li>
+<li><p>Draw a suitable graph of these data.</p></li>
+<li><p>Explain briefly why a Welch t-test would be better than a pooled t-test in this case. Run a suitable Welch t-test and display the output.</p></li>
+<li><p>What do you conclude from your test, in the context of the data?</p></li>
+</ol>
+<!-- rnb-text-end -->
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkodGlkeXZlcnNlKQpgYGAKCgo2LjYgb25lLXNhbXBsZSBjaG9sZXN0ZXJvbAoKVGhlIGRhdGEgc2V0IGhlcmUgKGh0dHA6Ly9yaXRzb2tpZ3Vlc3Muc2l0ZS9kYXRhZmlsZXMvY2hvbGVzdC5jc3YpIGNvbnRhaW5zIGNob2xlc3Rlcm9sIG1lYXN1cmVtZW50cyBmb3IgaGVhcnQgYXR0YWNrIHBhdGllbnRzIChhdCBzZXZlcmFsIGRpZmZlcmVudCB0aW1lcykgYXMgd2VsbCBhcyBmb3IgYSBncm91cCBvZiBjb250cm9sIHBhdGllbnRzLiBXZSB3aWxsIGZvY3VzIG9uIHRoZSBjb250cm9sIHBhdGllbnRzIGluIHRoaXMgcXVlc3Rpb24uCgooYSkgUmVhZCBpbiBhbmQgZGlzcGxheSAoc29tZSBvZikgdGhlIGRhdGEuCgpgYGB7cn0KbXlfdXJsIDwtIHVybCgiaHR0cDovL3JpdHNva2lndWVzcy5zaXRlL2RhdGFmaWxlcy9jaG9sZXN0LmNzdiIpCmNob2xlc3QgPC0gcmVhZF9jc3YobXlfdXJsKQpjaG9sZXN0CmBgYAoKCgoKKGIpIE1ha2UgYSBzdWl0YWJsZSBwbG90IG9mIHRoZSBjaG9sZXN0ZXJvbCBsZXZlbHMgb2YgdGhlIGNvbnRyb2wgcGF0aWVudHMsIGFuZCBjb21tZW50IGJyaWVmbHkgb24gdGhlIHNoYXBlIG9mIHRoZSBkaXN0cmlidXRpb24uCgoKKGMpIEl0IGlzIHJlY29tbWVuZGVkIHRoYXQgcGVvcGxlIGluIGdvb2QgaGVhbHRoLCBzdWNoIGFzIHRoZSBDb250cm9sIHBhdGllbnRzIGhlcmUsIGtlZXAgdGhlaXIgY2hvbGVzdGVyb2wgbGV2ZWwgYmVsb3cgMjAwLiBJcyB0aGVyZSBldmlkZW5jZSB0aGF0IHRoZSBtZWFuIGNob2xlc3Rlcm9sIGxldmVsIG9mIHRoZSBwb3B1bGF0aW9uIG9mIHBlb3BsZSBvZiB3aGljaCB0aGUgQ29udHJvbCBwYXRpZW50cyBhcmUgYSBzYW1wbGUgaXMgbGVzcyB0aGFuIDIwMD8gU2hvdyB0aGF0IHlvdSB1bmRlcnN0YW5kIHRoZSBwcm9jZXNzLCBhbmQgc3RhdGUgeW91ciBjb25jbHVzaW9uIGluIHRoZSBjb250ZXh0IG9mIHRoZSBkYXRhLgoKKGQpIFdoYXQgdmFsdWVzIGNvdWxkIHRoZSBwb3B1bGF0aW9uIG1lYW4gY2hvbGVzdGVyb2wgbGV2ZWwgdGFrZT8gWW91IG1pZ2h0IG5lZWQgdG8gZ2V0IHNvbWUgbW9yZSBvdXRwdXQgdG8gZGV0ZXJtaW5lIHRoaXMuCgooZSkgRXhwbGFpbiBicmllZmx5IHdoeSB5b3Ugd291bGQgYmUgcmVhc29uYWJseSBoYXBweSB0byB0cnVzdCB0aGUgIHQgcHJvY2VkdXJlcyBpbiB0aGlzIHF1ZXN0aW9uLiAoVGhlcmUgYXJlIHR3byBwb2ludHMgeW91IG5lZWQgdG8gbWFrZS4pCiAgCiAgCgoKNy40IEV4ZXJjaXNlIGFuZCBhbnhpZXR5IGFuZCBidWxseWluZyBtaWNlCgpEb2VzIGV4ZXJjaXNlIGhlbHAgdG8gcmVkdWNlIGFueGlldHk/IFRvIGFzc2VzcyB0aGlzLCBzb21lIHJlc2VhcmNoZXJzIHJhbmRvbWx5IGFzc2lnbmVkIG1pY2UgdG8gZWl0aGVyIGFuIGVucmljaGVkIGVudmlyb25tZW50IHdoZXJlIHRoZXJlIHdhcyBhbiBleGVyY2lzZSB3aGVlbCBhdmFpbGFibGUsIG9yIGEgc3RhbmRhcmQgZW52aXJvbm1lbnQgd2l0aCBubyBleGVyY2lzZSBvcHRpb25zLiBBZnRlciB0aHJlZSB3ZWVrcyBpbiB0aGUgc3BlY2lmaWVkIGVudmlyb25tZW50LCBmb3IgZml2ZSBtaW51dGVzIGEgZGF5IGZvciB0d28gd2Vla3MsIHRoZSBtaWNlIHdlcmUgZWFjaCBleHBvc2VkIHRvIGEg4oCcbW91c2UgYnVsbHnigJ0g4oCUIGEgbW91c2Ugd2hvIHdhcyB2ZXJ5IHN0cm9uZywgYWdncmVzc2l2ZSwgYW5kIHRlcnJpdG9yaWFsLiBPbmUgbWVhc3VyZSBvZiBtb3VzZSBhbnhpZXR5IGlzIGFtb3VudCBvZiB0aW1lIGhpZGluZyBpbiBhIGRhcmsgY29tcGFydG1lbnQsIHdpdGggbWljZSB3aG8gYXJlIG1vcmUgYW54aW91cyBzcGVuZGluZyBtb3JlIHRpbWUgaW4gZGFya25lc3MuIFRoZSBhbW91bnQgb2YgdGltZSBzcGVudCBpbiBkYXJrbmVzcyBpcyByZWNvcmRlZCBmb3IgZWFjaCBvZiB0aGUgbWljZS4KClRoZSBkYXRhIGNhbiBiZSBmb3VuZCBhdCBsaW5rIChodHRwOi8vcml0c29raWd1ZXNzLnNpdGUvZGF0YWZpbGVzL3N0cmVzc2VkbWljZS50eHQpLgoKKGEpIFJlYWQgdGhlIGRhdGEgaW50byBSLCBhbmQgZGlzcGxheSB5b3VyIGRhdGEgZnJhbWUuIENvdW50IHRoZSBudW1iZXIgb2YgbWljZSBpbiBlYWNoIGdyb3VwLgoKKGIpIERyYXcgc2lkZS1ieS1zaWRlIGJveHBsb3RzIG9mIHRpbWUgc3BlbnQgaW4gZGFya25lc3MgZm9yIGVhY2ggZ3JvdXAgb2YgbWljZS4KCihjKSBEbyB0aGUgYm94cGxvdHMgc3VwcG9ydCB0aGUgaHlwb3RoZXNpcyBhYm91dCBleGVyY2lzZSBhbmQgYW54aWV0eT8gRXhwbGFpbiBicmllZmx5LgoKKGQpIENhcnJ5IG91dCBhICB0LXRlc3QgZm9yIGNvbXBhcmluZyB0aGUgbWVhbiB0aW1lIHNwZW50IGluIGRhcmtuZXNzIGZvciB0aGUgbWljZSBpbiB0aGUgdHdvIGdyb3Vwcy4gVGhpbmsgY2FyZWZ1bGx5IGFib3V0IHRoZSBkZXRhaWxzIG9mIHRoZSAgdC10ZXN0IChhbmQgd2hhdCB5b3UgbmVlZCBldmlkZW5jZSBpbiBmYXZvdXIgb2YpLgoKKGUpIFdoYXQgZG8geW91IGNvbmNsdWRlLCBpbiB0ZXJtcyBvZiBhbnhpZXR5IGFuZCBleGVyY2lzZSAoYXQgbGVhc3QgZm9yIG1pY2UpPyBFeHBsYWluIGJyaWVmbHkuCgooZikgRG9lcyBhbnl0aGluZyBpbiB0aGUgcHJldmlvdXMgcGFydHMgc3VnZ2VzdCBhbnkgcHJvYmxlbXMgd2l0aCB0aGUgYW5hbHlzaXMgeW91IGp1c3QgZGlkPyBFeHBsYWluIGJyaWVmbHkuCgoKCjcuNyBUaGUgYW5jaG9yaW5nIGVmZmVjdDogQXVzdHJhbGlhIHZzIFVTCgpUd28gZ3JvdXBzIG9mIHN0dWRlbnRzIChpbiBhIGNsYXNzIGF0IGEgQW1lcmljYW4gdW5pdmVyc2l0eSkgd2VyZSBhc2tlZCB3aGF0IHRoZXkgdGhvdWdodCB0aGUgcG9wdWxhdGlvbiBvZiBDYW5hZGEgd2FzLiAoVGhlIGNvcnJlY3QgYW5zd2VyIGF0IHRoZSB0aW1lIHdhcyBqdXN0IG92ZXIgMzAgbWlsbGlvbi4pIFNvbWUgb2YgdGhlIHN0dWRlbnRzLCBiZWZvcmUgaGF2aW5nIHRvIGFuc3dlciB0aGlzLCB3ZXJlIHRvbGQgdGhhdCB0aGUgcG9wdWxhdGlvbiBvZiB0aGUgVW5pdGVkIFN0YXRlcyB3YXMgYWJvdXQgMjcwIG1pbGxpb24uIFRoZSBvdGhlciBzdHVkZW50cyBpbiB0aGUgY2xhc3Mgd2VyZSB0b2xkIHRoYXQgdGhlIHBvcHVsYXRpb24gb2YgQXVzdHJhbGlhIHdhcyBhYm91dCAxOCBtaWxsaW9uLiBUaGUgZGF0YSBhcmUgaW4gaHR0cDovL3JpdHNva2lndWVzcy5zaXRlL2RhdGFmaWxlcy9hbmNob3JpbmcuY3N2LiBUaGUgZmlyc3QgY29sdW1uIGNvbnRhaW5zIHRoZSBjb3VudHJ5IHdob3NlIHBvcHVsYXRpb24gdGhlIHN0dWRlbnQgd2FzIHRvbGQsIGFuZCB0aGUgc2Vjb25kIGNvbnRhaW5zIHRoZSBzdHVkZW504oCZcyBndWVzcyBhdCB0aGUgcG9wdWxhdGlvbiBvZiBDYW5hZGEuCgpZb3UgbWlnaHQgd29uZGVyIGhvdyBiZWluZyB0b2xkIHRoZSBwb3B1bGF0aW9uIG9mIGFuIHVucmVsYXRlZCBjb3VudHJ5IHdvdWxkIGhhdmUgYW55IGltcGFjdCBvbiBhIHN0dWRlbnTigJlzIGd1ZXNzIGF0IHRoZSBwb3B1bGF0aW9uIG9mIENhbmFkYS4gUHN5Y2hvbG9neSBzYXlzIGl0IGRvZXM6IGl04oCZcyBjYWxsZWQgdGhlIGFuY2hvcmluZyBlZmZlY3QsIGFuZCB0aGUgaWRlYSBpcyB0aGF0IHRoZSBudW1iZXIgbWVudGlvbmVkIGZpcnN0IGFjdHMgYXMgYW4g4oCcYW5jaG9y4oCdOiBhIHBlcnNvbuKAmXMgZ3Vlc3Mgd2lsbCBiZSBjbG9zZXIgdG8gdGhlIGFuY2hvciB0aGFuIGl0IHdvdWxkIGhhdmUgYmVlbiBvdGhlcndpc2UuIEluIHRoaXMgY2FzZSwgdGhhdCB3b3VsZCBtZWFuIHRoYXQgdGhlIGd1ZXNzZXMgZm9yIHRoZSBzdHVkZW50cyBnaXZlbiB0aGUgVVMgYXMgYW4gYW5jaG9yIHdpbGwgYmUgaGlnaGVyIHRoYW4gZm9yIHRoZSBzdHVkZW50cyBnaXZlbiBBdXN0cmFsaWEgYXMgYW4gYW5jaG9yLiBXZSBhcmUgaW50ZXJlc3RlZCBpbiBzZWVpbmcgd2hldGhlciB0aGVyZSBpcyBldmlkZW5jZSBmb3IgdGhhdCBoZXJlLgoKKGEpIFJlYWQgaW4gYW5kIGRpc3BsYXkgKHNvbWUgb2YpIHRoZSBkYXRhLgoKCgoKKGIpIERyYXcgYSBzdWl0YWJsZSBncmFwaCBvZiB0aGVzZSBkYXRhLgoKCgoKKGMpIEV4cGxhaW4gYnJpZWZseSB3aHkgYSBXZWxjaCAgdC10ZXN0IHdvdWxkIGJlIGJldHRlciB0aGFuIGEgcG9vbGVkICB0LXRlc3QgaW4gdGhpcyBjYXNlLgpSdW4gYSBzdWl0YWJsZSBXZWxjaCAgdC10ZXN0IGFuZCBkaXNwbGF5IHRoZSBvdXRwdXQuCgooZCkgV2hhdCBkbyB5b3UgY29uY2x1ZGUgZnJvbSB5b3VyIHRlc3QsIGluIHRoZSBjb250ZXh0IG9mIHRoZSBkYXRhPwoKCgoKCgo=</div>
 
 
 
@@ -1881,7 +1879,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("soap.Rmd");
+  window.initializeSourceEmbed("20210929.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

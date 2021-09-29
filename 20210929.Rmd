@@ -1,0 +1,83 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+6.6 one-sample cholesterol
+
+The data set here (http://ritsokiguess.site/datafiles/cholest.csv) contains cholesterol measurements for heart attack patients (at several different times) as well as for a group of control patients. We will focus on the control patients in this question.
+
+(a) Read in and display (some of) the data.
+
+```{r}
+my_url <- url("http://ritsokiguess.site/datafiles/cholest.csv")
+cholest <- read_csv(my_url)
+cholest
+```
+
+
+
+
+(b) Make a suitable plot of the cholesterol levels of the control patients, and comment briefly on the shape of the distribution.
+
+
+(c) It is recommended that people in good health, such as the Control patients here, keep their cholesterol level below 200. Is there evidence that the mean cholesterol level of the population of people of which the Control patients are a sample is less than 200? Show that you understand the process, and state your conclusion in the context of the data.
+
+(d) What values could the population mean cholesterol level take? You might need to get some more output to determine this.
+
+(e) Explain briefly why you would be reasonably happy to trust the  t procedures in this question. (There are two points you need to make.)
+  
+  
+
+
+7.4 Exercise and anxiety and bullying mice
+
+Does exercise help to reduce anxiety? To assess this, some researchers randomly assigned mice to either an enriched environment where there was an exercise wheel available, or a standard environment with no exercise options. After three weeks in the specified environment, for five minutes a day for two weeks, the mice were each exposed to a “mouse bully” — a mouse who was very strong, aggressive, and territorial. One measure of mouse anxiety is amount of time hiding in a dark compartment, with mice who are more anxious spending more time in darkness. The amount of time spent in darkness is recorded for each of the mice.
+
+The data can be found at link (http://ritsokiguess.site/datafiles/stressedmice.txt).
+
+(a) Read the data into R, and display your data frame. Count the number of mice in each group.
+
+(b) Draw side-by-side boxplots of time spent in darkness for each group of mice.
+
+(c) Do the boxplots support the hypothesis about exercise and anxiety? Explain briefly.
+
+(d) Carry out a  t-test for comparing the mean time spent in darkness for the mice in the two groups. Think carefully about the details of the  t-test (and what you need evidence in favour of).
+
+(e) What do you conclude, in terms of anxiety and exercise (at least for mice)? Explain briefly.
+
+(f) Does anything in the previous parts suggest any problems with the analysis you just did? Explain briefly.
+
+
+
+7.7 The anchoring effect: Australia vs US
+
+Two groups of students (in a class at a American university) were asked what they thought the population of Canada was. (The correct answer at the time was just over 30 million.) Some of the students, before having to answer this, were told that the population of the United States was about 270 million. The other students in the class were told that the population of Australia was about 18 million. The data are in http://ritsokiguess.site/datafiles/anchoring.csv. The first column contains the country whose population the student was told, and the second contains the student’s guess at the population of Canada.
+
+You might wonder how being told the population of an unrelated country would have any impact on a student’s guess at the population of Canada. Psychology says it does: it’s called the anchoring effect, and the idea is that the number mentioned first acts as an “anchor”: a person’s guess will be closer to the anchor than it would have been otherwise. In this case, that would mean that the guesses for the students given the US as an anchor will be higher than for the students given Australia as an anchor. We are interested in seeing whether there is evidence for that here.
+
+(a) Read in and display (some of) the data.
+
+
+
+
+(b) Draw a suitable graph of these data.
+
+
+
+
+(c) Explain briefly why a Welch  t-test would be better than a pooled  t-test in this case.
+Run a suitable Welch  t-test and display the output.
+
+(d) What do you conclude from your test, in the context of the data?
+
+
+
+
+
+

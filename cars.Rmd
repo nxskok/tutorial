@@ -1,0 +1,19 @@
+load the tidyverse
+
+```{r}
+library(tidyverse)
+```
+
+read the data
+
+```{r}
+my_url <- "http://ritsokiguess.site/datafiles/cars.csv"
+cars <- read_csv(my_url)
+```
+
+display the data
+
+```{r}
+cars
+```
+
