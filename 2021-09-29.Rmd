@@ -1,0 +1,185 @@
+---
+title: "Sep 29 tutorial"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+6.6 one-sample cholesterol
+
+The data set here (http://ritsokiguess.site/datafiles/cholest.csv) contains cholesterol measurements for heart attack patients (at several different times) as well as for a group of control patients. We will focus on the control patients in this question.
+
+(a) Read in and display (some of) the data.
+
+```{r}
+my_url <- url("http://ritsokiguess.site/datafiles/cholest.csv")
+cholest <- read_csv(my_url)
+cholest
+```
+
+There are 30 rows and a column of control measurements.
+
+
+(b) Make a suitable plot of the cholesterol levels of the control patients, and comment briefly on the shape of the distribution.
+
+One variable suggests a histogram:
+
+
+
+
+
+```{r}
+ggplot(cholest, aes(x = control)) + geom_histogram(bins = 6)
+```
+
+This distribution is skewed to the right.
+
+(c) It is recommended that people in good health, such as the Control patients here, keep their cholesterol level below 200. Is there evidence that the mean cholesterol level of the population of people of which the Control patients are a sample is less than 200? Show that you understand the process, and state your conclusion in the context of the data.
+
+H0: population mean cholesterol level is equal to 200
+Ha: population mean cholesterol level is less than 200
+
+This is a one-sided test:
+
+```{r}
+with(cholest, t.test(control, mu = 200, alternative = "less"))
+```
+
+At alpha of 0.05, we cannot quite reject the null hypothesis because the P-value is just bigger than 0.05. There is no evidence that the mean cholesterol level of the population of patients is less than 200.
+
+At alpha of 0.01, we still cannot reject the null because the P-value is also greater than 0.01.
+
+At alpha of 0.10, we would have been able to reject the null (P-value *less* than alpha).
+
+
+(d) What values could the population mean cholesterol level take? You might need to get some more output to determine this.
+
+To make an inference about the population mean, we need a confidence interval. For this, we need to rerun the test two-sided:
+
+```{r}
+with(cholest, t.test(control))
+```
+
+The population mean cholesterol level is, with 95% confidence, between 184.8 and 201.5. (Round these off to 1  decimal more than the data, that is one decimal here.)
+
+(e) Explain briefly why you would be reasonably happy to trust the  t procedures in this question. (There are two points you need to make.)
+
+1. The data distribution is somewhat skewed to the right.
+2. The sample size of n = 30 is fairly large, so the Central Limit Theorem will help quite a bit in overcoming the skewness in the data distribution, and therefore the t-test should be reasonably  good.
+
+
+7.4 Exercise and anxiety and bullying mice
+
+Does exercise help to reduce anxiety? To assess this, some researchers randomly assigned mice to either an enriched environment where there was an exercise wheel available, or a standard environment with no exercise options. After three weeks in the specified environment, for five minutes a day for two weeks, the mice were each exposed to a “mouse bully” — a mouse who was very strong, aggressive, and territorial. One measure of mouse anxiety is amount of time hiding in a dark compartment, with mice who are more anxious spending more time in darkness. The amount of time spent in darkness is recorded for each of the mice.
+
+The data can be found at link (http://ritsokiguess.site/datafiles/stressedmice.txt).
+
+(a) Read the data into R, and display your data frame. Count the number of mice in each group.
+
+The data are separated by spaces
+
+```{r}
+my_url <- url("http://ritsokiguess.site/datafiles/stressedmice.txt")
+mice <- read_table(my_url)
+mice
+```
+
+Count the number of mice in each group:
+
+```{r}
+mice %>% count(Environment)
+```
+
+There are 7 mice in each group.
+
+To get the means for each group:
+
+```{r}
+mice %>% group_by(Environment) %>% 
+  summarize(n = n(), mean = mean(Time), sd = sd(Time))
+```
+
+
+(b) Draw side-by-side boxplots of time spent in darkness for each group of mice.
+
+
+
+
+
+```{r}
+ggplot(mice, aes(x = Environment, y = Time)) + geom_boxplot()
+```
+
+
+(c) Do the boxplots support the hypothesis about exercise and anxiety? Explain briefly.
+
+The boxplots are supporting the researcher's hypothesis, with the mice that exercised typically being less anxious than the mice that did not (as evidenced by the mice that exercised spending less time in a dark compartment).
+
+(d) Carry out a  t-test for comparing the mean time spent in darkness for the mice in the two groups. Think carefully about the details of the  t-test (and what you need evidence in favour of).
+
+This is a two-sample t-test, one-sided because the Enriched mice should be less anxious if the researchers' hypothesis is correct:
+
+```{r}
+t.test(Time ~ Environment, data = mice, alternative = "less")
+```
+
+This does not assume that the two groups have the same spread. If you are happy that the two groups have similar spread, you could instead do the pooled t-test:
+
+```{r}
+t.test(Time ~ Environment, data = mice, alternative = "less", var.equal = TRUE)
+```
+
+The P-value is almost exactly the same as for the Welch test, and so the conclusion is the same.
+
+(e) What do you conclude, in terms of anxiety and exercise (at least for mice)? Explain briefly.
+
+The P-value is extremely small, so we reject the null hypothesis that the two treatments result in the same anxiety in favour of the alternative that the mice that exercised have lower anxiety on average.
+
+(f) Does anything in the previous parts suggest any problems with the analysis you just did? Explain briefly.
+
+The Enriched group has an upper outlier (one mouse that was unusually anxious). This makes us worried about the validity of the t-test because the sample sizes are small, and so the normality is important. However, the P-value is so small that the conclusion is unlikely to change.
+
+7.7 The anchoring effect: Australia vs US
+
+Two groups of students (in a class at a American university) were asked what they thought the population of Canada was. (The correct answer at the time was just over 30 million.) Some of the students, before having to answer this, were told that the population of the United States was about 270 million. The other students in the class were told that the population of Australia was about 18 million. The data are in http://ritsokiguess.site/datafiles/anchoring.csv. The first column contains the country whose population the student was told, and the second contains the student’s guess at the population of Canada.
+
+You might wonder how being told the population of an unrelated country would have any impact on a student’s guess at the population of Canada. Psychology says it does: it’s called the anchoring effect, and the idea is that the number mentioned first acts as an “anchor”: a person’s guess will be closer to the anchor than it would have been otherwise. In this case, that would mean that the guesses for the students given the US as an anchor will be higher than for the students given Australia as an anchor. We are interested in seeing whether there is evidence for that here.
+
+(a) Read in and display (some of) the data.
+
+```{r}
+my_url <- url("http://ritsokiguess.site/datafiles/anchoring.csv")
+canada <- read_csv(my_url)
+canada
+```
+
+
+
+(b) Draw a suitable graph of these data.
+
+
+
+
+
+```{r}
+ggplot(canada, aes(x = anchor, y = estimate)) + geom_boxplot()
+```
+
+Here, a Welch t-test would be better than a pooled one because the groups differ greatly in spread.
+However, the big outlier in the Australia group should make us reconsider doing a t-test at all,
+especially given that there are only 11 students in the Australia group.
+
+
+(c) Explain briefly why a Welch  t-test would be better than a pooled  t-test in this case.
+Run a suitable Welch  t-test and display the output.
+
+(d) What do you conclude from your test, in the context of the data?
+
+
+
+
+
+
