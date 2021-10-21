@@ -1,0 +1,121 @@
+---
+title: "tutorial 4"
+output: html_notebook
+---
+
+Email me at antonio.lorenzo@mail.utoronto.ca if you have any questions!!
+
+
+```{r}
+library(tidyverse)
+```
+
+## 8.2
+
+# a)
+
+```{r}
+dat <- rnorm(10, 20, 2)
+dat
+```
+These values seem reasonable because most, if not all, of them are within 2 standard deviations from the population mean, which is equal to 20.
+
+# b)
+
+```{r}
+tibble(sim = 1:1000) %>%
+  rowwise() %>%
+  mutate(normal_sample = list(rnorm(10, 20, 2))) %>%
+  mutate(t_test = list(t.test(normal_sample, mu = 20))) %>%
+  mutate(pval = t_test$p.value) %>%
+  count(pval <= 0.05)
+  
+```
+# c)
+
+Because the null mean and population mean were both equal to 20, this means that we should conclude that the null hypothesis is correct. Incorrectly rejecting the null hypothesis would be a mistake (a.k.a. Type I error). And since our alpha = 0.05 (default alpha for t-test), then we should expect a 0.05 or 5% type I error rate. I got 43/1000, or 0.043, which seems reasonably close to 0.05.
+
+# d)
+
+```{r}
+tibble(sim = 1:10000) %>%
+  rowwise() %>%
+  mutate(normal_sample = list(rnorm(10, 22, 2))) %>%
+  mutate(t_test = list(t.test(normal_sample, mu = 20))) %>%
+  mutate(pval = t_test$p.value) %>%
+  count(pval <= 0.05)
+```
+You could use 1000, or 10000, or maybe even more if you'd like. But you're going to run into performance issues the more 0's you add. Higher number of simulations usually result in tighter confidence intervals for the power, or more precise results. From the results, it seems like the power is about 80%
+
+# e)
+
+Keyword here is "Calculate", which means that we should use the command power.t.test instead of simulations.
+
+```{r}
+power.t.test(n=10, delta=22-20, sd=2, type="one.sample", alternative = "two.sided")
+```
+I got 0.803, which is really close to the value we got from the simulation above. This suggests that our results might be corrrect.
+
+We can also use prop.test to check the confidence interval of the power.
+
+```{r}
+prop.test(8064,10000,0.05)
+```
+From this, we can see that the confidence interval of the power is between 0.798 to 0.814, which is great, because the power values that we got from simulations and from power.t.test are within this interval.
+
+## 8.2
+
+# a)
+
+Again, the keyword here is "Calculate", which means that we should use the command power.t.test.
+
+```{r}
+power.t.test(n=30, delta=110-100, sd=20, type="one.sample", alternative="two.sided")
+```
+Delta is the difference between the true mean and the null mean.
+
+We could also try this via simulations.
+
+```{r}
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(samples = list(rnorm(30, 110, 20))) %>% 
+  mutate(ttest = list(t.test(samples, mu = 100))) %>% 
+  mutate(pvals = ttest$p.value) %>% 
+  count(pvals<=0.05)
+```
+
+And we have 753, which is almost the same as the value we got from the power.t.test.
+
+# b)
+
+One cool thing about this command is that we can leave one of the arguments out and the code still works!
+
+```{r}
+power.t.test(delta=10, power=0.8, sd=20, type="one.sample", alternative = "two.sided")
+```
+According to this, we would need a sample size of around 33.37, or 34 if we round up, to get a power of 0.8. In real life settings, we would typically round up because it doesn't make sense to have 0.37 patients or individuals (1/3 of a person doesn't make sense!). And we would round up just to be safe.
+
+We could also obtain this value by changing the sample size from the simulation code we previously used. But this is a more tedious approach because it involves trial and error.
+
+```{r}
+tibble(sim = 1:1000) %>%
+  rowwise() %>%
+  mutate(normal_sample = list(rnorm(40, 110, 20))) %>%
+  mutate(t_test = list(t.test(normal_sample, mu = 100))) %>%
+  mutate(pval = t_test$p.value) %>%
+  count(pval <= 0.05)
+```
+
+Our power is too big if we use a sample size of 40! So we can keep doing it until we get as close to 80% as possible. Now let's try 35...
+
+```{r}
+tibble(sim = 1:1000) %>%
+  rowwise() %>%
+  mutate(normal_sample = list(rnorm(35, 110, 20))) %>%
+  mutate(t_test = list(t.test(normal_sample, mu = 100))) %>%
+  mutate(pval = t_test$p.value) %>%
+  count(pval <= 0.05)
+```
+
+Now I have 81.9%, which is a lot closer to 80% compared to when we used a sample size of 40. Again, this involves some trial and error and it might be better to use power.t.test in most situations, and when you have normally distributed data.

@@ -1,0 +1,148 @@
+##  Running a maze (problem 9.1)
+
+```{r}
+library(tidyverse)
+library(smmr)
+```
+
+
+ A researcher is trying to design a maze that can be run by
+rats in about 60 seconds. One particular maze was run by a sample of
+21 rats, with the times shown in
+[link](http://ritsokiguess.site/datafiles/maze.txt). 
+
+
+
+
+
+
+(a) Read the data into R. What (if anything) are the data values
+delimited by?
+
+There is only one column of values, so there is nothing for them to be separated by. Hence pretty much any `read_` function will work. `read_csv` is easiest, but something like this also works:
+
+```{r}
+my_url <- url("http://ritsokiguess.site/datafiles/maze.txt")
+rats <- read_delim(my_url, " ")
+rats
+```
+
+
+(b) Run a sign test, doing it yourself as we did in class:
+count the number of values above and below 60, take the *smaller*
+of those, and find the probability of a value of that or smaller still
+on a binomial distribution with $n=21$ and $p=0.5$ (we have 21 data
+points), doubling the answer because the test is two-sided.
+
+I didn't show this in tutorial, but something like this:
+
+```{r}
+rats %>% count(time<60)
+```
+
+Sixteen values less that 60 and five greater.
+
+To get a P-value out of this, find the probability of observing 5 values or less in a binomial with $n = 21, p = 0.5$:
+
+```{r}
+sum(dbinom(0:5, 21, 0.5))
+```
+
+or, just as good:
+
+```{r}
+sum(dbinom(16:21, 21, 0.5))
+```
+
+It doesn't matter whether you count from the smaller count down to 0, or from the bigger one up to $n$. The only problem is that we want our test to be two-sided ("not equal to 60"), so we have to multiply by 2:
+
+```{r}
+2 * sum(dbinom(0:5, 21, 0.5))
+```
+
+This is still less than 0.05, so we would reject a median of 60 in favour of a two-sided alternative.
+
+(c)
+When you have `smmr` installed, use `sign_test` from
+that package to re-run your sign test. Do you get the same P-value?
+
+
+```{r}
+sign_test(rats, time, 60)
+```
+
+The two-sided P-value of 0.0266 is less than 0.05, so we reject the null hypothesis that the median time is 60 seconds in favour of the alternative that it is not 60.
+
+This is the same as the P-value that I got above.
+
+(d) Package `smmr` also has a function
+`pval_sign`, which has the same input as
+`sign_test`, but with the null median *first*.
+Run it on your data and see what it gives.
+
+```{r}
+pval_sign(60, rats, time)
+```
+
+Same again.
+
+(e) Obtain a 95\% confidence interval for the median based on these
+data. Do this two ways. First, use the trial and error way from class
+(either the try-lots-of-values way or the bisection way; either is good).
+Second, use `ci_median` from `smmr`. The latter takes
+as input a data frame, a column name (unquoted) and optionally a
+`conf.level` that defaults to 0.95.
+
+To fill in what I didn't finish in tutorial:
+
+The idea is that 60 is rejected as a median says that 60 is *outside* a 95% CI. To find out what values *are* in the CI, try a bunch of values for the null median and get their (two-sided) P-values. These are the two I did in tutorial:
+
+```{r}
+pval_sign(55, rats, time)
+```
+
+```{r}
+pval_sign(57, rats, time)
+```
+
+This says that both 55 and 57 are inside the interval, but 57 only just, because the P-value is only just bigger than 0.05.
+
+The idea here is to try a lot of null medians and see which ones don't get rejected, for example:
+
+```{r}
+tibble(null_median = seq(30, 60, 2.5)) %>% 
+  rowwise() %>% 
+  mutate(p_val = pval_sign(null_median, rats, time)) %>% 
+  mutate(where = ifelse(p_val<=0.05, "outside", "inside"))
+```
+
+To this accuracy, the interval goes from 45.0 to 57.5. The accuracy is not hugely important; the process is what matters. You can always go back and do it again with more accuracy once you have the process. 
+
+Now use smmr (as I did in tutorial):
+
+```{r}
+ci_median(rats, time)
+```
+
+My trial-and-error CI is kind of like this one. (`ci_median` uses the bisection idea that's in the lecture notes, so the interval I just got should be the accurate one.)
+
+You probably won't have any idea (at first) what the interval might be. Maybe your initial guess will be too narrow:
+
+```{r}
+tibble(null_median = seq(40, 50, 1)) %>% 
+  rowwise() %>% 
+  mutate(p_val = pval_sign(null_median, rats, time)) %>% 
+  mutate(where = ifelse(p_val<=0.05, "outside", "inside"))
+```
+
+so that you have to expand it out to get the top end. Or maybe your original guess is too wide:
+
+```{r}
+tibble(null_median = seq(0, 100, 10)) %>% 
+  rowwise() %>% 
+  mutate(p_val = pval_sign(null_median, rats, time)) %>% 
+  mutate(where = ifelse(p_val<=0.05, "outside", "inside"))
+```
+
+and all this tells you is that the interval is somewhere near 50. So now you can focus in on, say, 40 to 60 and nail it down better. With these things, the story is to make a guess, and then refine it based on what you see.
+

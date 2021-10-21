@@ -1,0 +1,92 @@
+problem 8.3 from PASIAS:
+
+```{r}
+library(tidyverse)
+```
+
+8.3 Simulating power for proportions
+
+In opinion surveys (and other places), we are testing for a proportion  p (for example, the proportion of people agreeing with some statement). Often, we want to know whether the proportion is “really” greater than 0.5.
+  
+That would entail testing a null  
+H0: p=0.5
+  against an alternative  
+Ha: p>0.5. 
+
+This is usually done by calculating the test statistic
+z=(^p−0.5) / √(0.25/n),
+ 
+where  ^p is the observed proportion in the sample, and getting a P-value from the upper tail of a standard normal distribution. (The 0.25 is  p(1−p) where  p=0.5.) This is what prop.test does, as we investigate shortly.
+
+
+
+(a) Use `rbinom` to generate a random value from a binomial distribution with  
+n=100 and  p=0.6. There are three inputs to `rbinom`: the first one should be the number 1, and the second and third are the  n and  p
+  of the binomial distribution.
+  
+```{r}
+rbinom(1, 100, 0.6)
+```
+  
+
+(b) Using the random binomial that you generated just above, use `prop.test` to test whether it could reasonably have come from a binomial population with  
+n=100 and   p =0.5, or whether  p is actually bigger than 0.5. (Of course, you know it actually did not come from a population with p =0.5.) `prop.test` has, for us, four inputs, thus:
+
+the observed number of successes
+
+the n of the binomial distribution
+
+the null-hypothesis p of the binomial distribution
+
+the alternative hypothesis, here “greater”
+
+```{r}
+prop.test(66, 100, 0.5, alternative = "greater")
+```
+
+The P-value is very small (less even than 0.001), so we reject the null hypothesis and conclude that the probability of success is greater than 0.5 (as, indeed, we know it was, because p was actually 0.6).
+
+The actual answer you get will depend on your random binomial, but the likelihood is that you will (correctly) reject the null hypothesis here.
+
+
+(c) Run prop.test again, just as you did before, but this time save the result, and extract the piece of it called p.value. Is that the P-value from your test?
+
+```{r}
+ans <- prop.test(66, 100, 0.5, alternative = "greater")
+ans$p.value
+```
+
+Yes it is.
+
+(d) Estimate the power of a test of  H0: p=0.5 against  Ha: p>0.5
+  when  n=500 and  p=0.56, using  α=0.05. There are three steps (with a bit of setup first):
+
+generate random samples from binomial distributions with n=500 and  p=0.56, repeated “many” times (something like 1000 or 10,000 is good)
+
+run prop.test on each of those random samples
+
+extract the P-value for each test and save the results (in a column called, perhaps, pvals).
+
+So I lied: the fourth and final step is to count how many of those P-values are 0.05 or less.
+
+
+The *structure* of the six lines of code below is always the same; the *details* vary according to the 
+distribution your data come from (the third line), and the test you're
+finding the power of (the fourth line).
+
+```{r}
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = rbinom(1, 500, 0.56)) %>% 
+  mutate(prop_test = list(prop.test(my_sample, 500, 0.5, alternative = "greater"))) %>% 
+  mutate(pval = prop_test$p.value) %>% 
+  count(pval <= 0.05)
+```
+
+The estimated power to reject a null hypothesis of p = 0.5 against Ha: p>0.5
+is about 84% when p is actually 0.56 with a sample size of n = 500.
+
+Even though the null is not very wrong, we have a large sample size, and so the power is higher than we might have expected.
+
+
+
