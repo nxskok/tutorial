@@ -1,0 +1,212 @@
+---
+title: "Tutorial 2021-10-27"
+output: html_notebook
+---
+
+## packages
+
+```{r}
+library(tidyverse)
+library(smmr)
+```
+
+
+
+11.1
+
+##  Measuring body fat
+
+
+ Athletes are concerned with measuring their body fat
+percentage. Two different methods are available: one using ultrasound,
+and the other using X-ray technology. We are interested in whether
+there is a difference in the mean body fat percentage as measured by
+these two methods, and if so, how big that difference is. Data on 16
+athletes are at
+[link](http://ritsokiguess.site/datafiles/bodyfat.txt). 
+
+
+
+(a) Explain briefly why a matched pairs analysis is more
+suitable for these data than a two-independent-samples analysis
+(using a two-sample $t$-test). You might find that looking at the
+data (clicking on the link) helps you figure this out.
+
+We have 2 measurements for each athlete, paired up (the two ways of measuring body fat).
+
+(b) Read in the data and check that you have a sensible number of
+rows and columns.
+
+```{r}
+my_url <- "http://ritsokiguess.site/datafiles/bodyfat.txt"
+bodyfat <- read_delim(my_url, " ")
+bodyfat
+```
+
+There are 16 athletes with 2 measurements for each (plus an identifier).
+
+
+(c) Carry out a suitable test to determine whether the means are
+the same or different. (At this point, obtain the R output including a P-value.)
+
+A matched pairs $t$-test:
+
+```{r}
+with(bodyfat, t.test(xray, ultrasound, paired = TRUE))
+```
+
+
+(d) What do you conclude from the test?
+
+The null hypothesis said that the means for the two methods are equal. This null is not rejected (P-value 0.7623 > 0.05). So we conclude that the two methods come out the same on average.
+
+
+
+(e) Obtain a 95\% confidence interval for the population mean
+difference. How is the interval consistent with your test?
+
+
+(read off output)
+
+(f) Calculate the differences, and make a normal quantile plot of
+them. Is there any evidence that normality of differences fails?
+Explain briefly. 
+
+aside: make a histogram of the differences first:
+
+```{r}
+bodyfat %>% 
+  mutate(diff = xray - ultrasound) -> bodyfat
+bodyfat
+```
+
+```{r}
+ggplot(bodyfat, aes(x = diff)) + geom_histogram(bins = 6)
+```
+
+normal quantile plot:
+
+```{r}
+ggplot(bodyfat, aes(sample = diff)) +
+  stat_qq() + stat_qq_line()
+```
+
+the normality is questionable because the two highest observations are too high (outliers) or, there is evidence of skewness (curved shape). But, we have a sample size of 16, so the central limit theorem will help some.
+
+
+If this is not normal enough for you, do a matched pairs sign test:
+
+```{r}
+sign_test(bodyfat, diff, 0)
+```
+
+Again, the null hypothesis (median difference = 0) is not rejected. (Same conclusion as before.)
+
+Or we could get a CI for the median difference:
+
+```{r}
+ci_median(bodyfat, diff)
+```
+
+(this interval includes 0 as it should: 0 was not rejected.)
+
+# 10.2
+
+##  Fear of math
+
+
+ Two new short courses have been proposed for helping
+students who suffer from severe math phobia. The courses are labelled
+A and B. Ten students were randomly allocated to one of these two
+courses, and each student's score on a math phobia test was recorded
+after they completed their course. The math phobia test produces
+whole-number scores between 0 and 10, with a higher score indicating a
+greater fear of mathematics. The data can be found in
+[link](http://ritsokiguess.site/datafiles/mathphobia.txt). We start
+with R for this question.
+
+
+
+(a) Read in the data and check, however you like, that you have 10
+observations, 5 from each course.
+
+
+Are the data values separated by single spaces?
+
+```{r}
+my_url <- "http://ritsokiguess.site/datafiles/mathphobia.txt"
+math <- read_delim(my_url, " ")
+math
+```
+
+10 rows for 10 students, the course each one took, and the phobia score.
+
+This is a two-sample situation (each student only measured once).
+
+(b) Draw boxplots of the math phobia scores for each group (one
+line of code). What is the most striking thing that you notice?
+
+```{r}
+ggplot(math, aes(x = course, y = phobia)) + geom_boxplot()
+```
+
+or side by side histograms:
+
+```{r}
+ggplot(math, aes(x = phobia)) + geom_histogram(bins = 5) +
+  facet_wrap(~course, ncol = 1)
+```
+
+
+we could also do a pair of normal quantile plots:
+
+```{r}
+ggplot(math, aes(sample = phobia)) +
+  stat_qq() + stat_qq_line() +
+  facet_wrap(~ course)
+```
+
+
+
+Course B has a lot of variability of phobia scores. Course A has much less variability, but the median and Q3 are the same (the median is at the top of the box).
+
+There seems to be a problem with normality for course A, and there are only 5 observations, so the normality matters. We might hesitate to trust a $t$-test.
+
+(c) Do a two-sample $t$-test to assess whether there is a
+difference in mean phobia scores after the students have taken the two
+courses. What do you conclude? (You have no \textsl{a
+priori}^[That is, before looking at the data. This is  Latin. It's also the place that the Bayesian "prior distribution"  comes from. The "posterior distribution" comes from the Latin  *a posteriori*, which means *afterwards*, that is, after  you have looked at the data.] 
+reason to
+suppose that a particular one of the tests will produce a higher mean
+than the other, so do a two-sided test.)
+
+```{r}
+t.test(phobia ~ course, data = math)
+```
+
+We are not sure whether we trust this.
+
+
+
+
+
+
+(d) Explain briefly why a $t$-test would not be good for these
+data. (There are two things that you need to say.)
+
+See discussion with graph.
+
+
+(e) Run a suitable test to compare the "typical" scores for the
+two courses. (You can use the version from a package rather than
+building your own.) What do you conclude?
+
+
+```{r}
+median_test(math, phobia, course)
+```
+
+no evidence that the median phobia scores are different (P-value = 0.6592). This test makes no assumption about normality (so it works fine when we doubt normality), but if normality is OK, it uses the data very inefficiently, so in that case the $t$-test is better.
+
+See the handspans problem, 10.8, for how the table of aboves and belows looks when there is a (strongly) significant difference between the medians. 
+
