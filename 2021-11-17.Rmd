@@ -67,7 +67,7 @@ summary(runner.2)
  
 This is a complete waste of time! The squared term is nowhere near significant, and the increase in R-squared over `runner.1` is almost zero. So we can forget about this model from here on.
  
-Aside 2: displaying the `summary` is the old way of looking at regression results, but perfectly good for a human looking at them. The `tidyverse`-style way to do it 
+Aside 2: displaying the `summary` is the old way of looking at regression results, but perfectly good for a human looking at them. The `tidyverse`-style way to do it is to use `glance` and `tidy` from the `broom` package, which you will have to install first. `glance` gives you a one-row summary of the entire model, including things like R-squared, and `tidy` gives you the table with the intercept and slope and their P-values. 
  
 ```{r}
 library(broom)
@@ -75,34 +75,36 @@ glance(runner.1)
 tidy(runner.1)
 ```
  
+The value of these is that they are *dataframes*, so that anything you can do with dataframes, you can do with these, such as extracting numbers from them. This provides a quick way of getting hold of things like R-squared. 
 
 (e) How would you *interpret* the slope? That is, what is
 the slope, and what does that mean about blood sugar and running distance?
  
+The slope is $-25.37$. This means that as distance goes up by 1 (the runner runs one mile further), his blood sugar falls by about 25 units on average.  
 
 (f) Is there a (statistically) significant relationship between
 running distance and blood sugar? How do you know? Do you find this
 surprising, given what you have seen so far? Explain briefly.
 
-let's do residual plots:
+The P-value for `distance` is $2.28 \times 10^{-8}$, extremely small, so there is definitely a significant relationship between running distance and blood sugar. The scatterplot suggested an unambiguous downward trend, so for me this is not surprising at all.
+
+I skipped (g) and (h) (I haven't done these in lecture yet).
+
+Let's do residual plots. I am not really expecting any problems here: we have a nice strong linear relationship with no obvious problems, but just to check:
 
 ```{r}
 ggplot(runner.1, aes(x = .fitted, y = .resid)) + geom_point()
 ```
 
+There is no pattern here. 
+
+We said in tutorial that the human brain has a tendency to find patterns even when there are none (because that was how it evolved). If you stare at one of these too long, you will see something that looks like a pattern. Psychologists call this [apophenia](https://en.wikipedia.org/wiki/Apophenia). Related is "pareidolia", the tendency to see human faces in inanimate objects (like the "man in the moon"). The brain evolved to recognize human faces, so this is not really very surprising.
+
+We should also check that the residuals are normal enough:
+
 ```{r}
 ggplot(runner.1, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 ```
  
-
-(g) This diabetic is planning to go for a 3-mile run tomorrow
-and a 5-mile run the day after. Obtain suitable 95\% intervals that
-say what his blood sugar might be after each of these runs. 
- 
-
-(h) Which of your two intervals is longer? Does this make
-sense? Explain briefly.
- 
-
-
+ This is a little short-tailed (at the top), or it might appear left-skewed if you make a histogram. Short tails are not a problem; it's *long* tails that we need to worry about (residuals unusually far from zero). Both graphs, and therefore the regression as a whole, are entirely satisfactory.
 
